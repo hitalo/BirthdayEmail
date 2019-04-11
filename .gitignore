@@ -1,0 +1,7 @@
+
+.idea
+gmail/__pycache__/
+
+// credentials
+token.pickle
+credentials
