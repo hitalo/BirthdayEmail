@@ -4,4 +4,10 @@ gmail/__pycache__/
 
 // credentials
 token.pickle
+directory-token.pickle
+gmail-token.pickle
+directory/token.pickle
+directory/samples/token.pickle
+gmail/token.pickle
+gmail/samples/token.pickle
 credentials

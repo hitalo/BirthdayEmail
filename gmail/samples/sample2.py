@@ -12,7 +12,7 @@ from email.mime.audio import MIMEAudio
 from email.mime.base import MIMEBase
 
 SCOPES = 'https://www.googleapis.com/auth/gmail.send'
-CLIENT_SECRET_FILE = '../../credentials/credentials.json'
+CLIENT_SECRET_FILE = '../../credentials/gmail/credentials.json'
 APPLICATION_NAME = 'BirthdayEmail'
 
 

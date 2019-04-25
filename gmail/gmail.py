@@ -15,9 +15,9 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
           'https://www.googleapis.com/auth/userinfo.profile',
           'https://www.googleapis.com/auth/gmail.send']
 
-CREDENTIAL = './credentials/credentials.json'
+CREDENTIAL = './credentials/gmail/credentials.json'
 PORT = 8085
-
+TOKEN = 'gmail-token.pickle'
 
 class GmailManager:
 
@@ -28,8 +28,8 @@ class GmailManager:
 
     def get_service(self):
         creds = None
-        if os.path.exists('token.pickle'):
-            with open('token.pickle', 'rb') as token:
+        if os.path.exists(TOKEN):
+            with open(TOKEN, 'rb') as token:
                 creds = pickle.load(token)
         # If there are no (valid) credentials available, let the user log in.
         if not creds or not creds.valid:
@@ -39,7 +39,7 @@ class GmailManager:
                 flow = InstalledAppFlow.from_client_secrets_file(CREDENTIAL, SCOPES)
                 creds = flow.run_local_server(port=PORT)
             # Save the credentials for the next run
-            with open('token.pickle', 'wb') as token:
+            with open(TOKEN, 'wb') as token:
                 pickle.dump(creds, token)
 
         service = build('gmail', 'v1', credentials=creds)
