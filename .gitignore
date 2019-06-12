@@ -2,6 +2,8 @@
 .idea
 gmail/__pycache__/
 
+email-config.json
+
 // credentials
 token.pickle
 directory-token.pickle
