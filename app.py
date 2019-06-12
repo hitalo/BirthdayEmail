@@ -5,11 +5,10 @@ from gmail.gmail import GmailManager
 from directory.directory import DirectoryManager
 
 
-print(datetime.date(2019, 4, 12) == datetime.datetime.today().date())
+#print(datetime.date(2019, 4, 12) == datetime.datetime.today().date())
 month = "{:02d}".format(datetime.datetime.today().month)
 day =  "{:02d}".format(datetime.datetime.today().day)
 current_date = day + '-' + month
-print(current_date)
 
 
 
@@ -23,12 +22,13 @@ else:
 
     with open('email-config.json') as email_config:
         email = json.load(email_config)
-        email['content'] = email['content'].replace('current_date', current_date)
-        print(email['content'])
+        email['content'] = email['content'].replace('##DATE##', current_date)
+
+    #users = ['sample@uern.br', 'sample@gmail.com']
 
     gmail_manager = GmailManager()
     print('Users:')
     for user in users:
         print(u'{0} ({1}) {2}'.format(user['primaryEmail'], user['name']['fullName'], user['customSchemas']['Outros_dados_pessoais']['Data_de_Nascimento']))
-        #message = gmail_manager.create_message('me', 'hitalo.emanoel@gmail.com', 'Test Gmail Api', email['content'])
-        #gmail_manager.send_message('me', message)
+        message = gmail_manager.create_message('me', "hitalo.emanoel@gmail.com", email['subject'], email['content'])
+        gmail_manager.send_message('me', message)
