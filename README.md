@@ -16,4 +16,4 @@ Packages to install: <br>
 - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib<br>
 
 #### Run
-- python app.py
+- python3 app.py
