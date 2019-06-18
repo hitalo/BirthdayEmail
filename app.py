@@ -22,9 +22,11 @@ else:
 
     with open('email-config.json') as email_config:
         email = json.load(email_config)
-        email['content'] = email['content'].replace('##DATE##', current_date)
 
-    #users = ['sample@uern.br', 'sample@gmail.com']
+        #To add vars
+        #email['content'] = email['content'].replace('##DATE##', current_date)
+
+    #users = ['hitalo.emanoel@gmail.com', 'wallacemedeiros@uern.br']
 
     gmail_manager = GmailManager()
     print('Users:')
@@ -33,5 +35,5 @@ else:
             continue
 
         print(u'{0} ({1}) {2}'.format(user['primaryEmail'], user['name']['fullName'], user['customSchemas']['Outros_dados_pessoais']['Data_de_Nascimento']))
-        #message = gmail_manager.create_message('me', "hitalo.emanoel@gmail.com", email['subject'], email['content'])
-        #gmail_manager.send_message('me', message)
+        message = gmail_manager.create_message('me', user['primaryEmail'], email['subject'], email['content'])
+        gmail_manager.send_message('me', message)
