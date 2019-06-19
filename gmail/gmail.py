@@ -1,23 +1,20 @@
 from __future__ import print_function
-import pickle
-import os.path
 
 from googleapiclient import errors
 from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+
+from google.oauth2 import service_account
 
 from email.mime.text import MIMEText
 import base64
+import json
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
           'https://www.googleapis.com/auth/userinfo.profile',
           'https://www.googleapis.com/auth/gmail.send']
 
-CREDENTIAL = './credentials/gmail/credentials.json'
-PORT = 8085
-TOKEN = 'gmail-token.pickle'
+SERVICE_ACCOUNT_FILE = './credentials/service.json'
 
 class GmailManager:
 
@@ -27,22 +24,15 @@ class GmailManager:
 
 
     def get_service(self):
-        creds = None
-        if os.path.exists(TOKEN):
-            with open(TOKEN, 'rb') as token:
-                creds = pickle.load(token)
-        # If there are no (valid) credentials available, let the user log in.
-        if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
-                flow = InstalledAppFlow.from_client_secrets_file(CREDENTIAL, SCOPES)
-                creds = flow.run_local_server(port=PORT)
-            # Save the credentials for the next run
-            with open(TOKEN, 'wb') as token:
-                pickle.dump(creds, token)
 
-        service = build('gmail', 'v1', credentials=creds)
+        creds = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+
+        with open('email-sender.json') as email_sender:
+            email = json.load(email_sender)
+        delegated_credentials = creds.with_subject(email['sender'])
+
+        service = build('gmail', 'v1', credentials=delegated_credentials)
         return service
 
 
@@ -94,7 +84,7 @@ class GmailManager:
 
 
     def main(self):
-        message = self.create_message('me', 'hitalo.emanoel@gmail.com', 'Test Gmail Api', 'This is just a test')
+        message = self.create_message('me', '@gmail.com', 'Test Gmail Api', 'This is just a test')
         self.send_message('me', message)
 
 if __name__ == '__main__':

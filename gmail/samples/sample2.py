@@ -128,8 +128,8 @@ def createMessageWithAttachment(sender, to, subject, msgHtml, msgPlain, attachme
 
 
 def main():
-    to = "hitalo.emanoel@gmail.com"
-    sender = "hitaloemanoel@uern.br"
+    to = "@gmail.com"
+    sender = "@uern.br"
     subject = "Test Email Send"
     msgHtml = "Hi<br/>Html Email"
     msgPlain = "Hi\nPlain Email"

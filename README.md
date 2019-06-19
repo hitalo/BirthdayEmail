@@ -9,8 +9,7 @@ Add to root directory: <br>
 - credentials (directory)
 
 Add to credentials: <br>
-- directory/credentials.json
-- gmail/credentials.json
+- service.json (service account key)
 
 Packages to install: <br>
 - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib<br>

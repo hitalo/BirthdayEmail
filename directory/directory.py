@@ -1,15 +1,12 @@
 from __future__ import print_function
-import pickle
-import os.path
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
 
-# If modifying these scopes, delete the file token.pickle.
+from googleapiclient.discovery import build
+from google.oauth2 import service_account
+
+import json
+
 SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
-CREDENTIAL = './credentials/directory/credentials.json'
-PORT = 8085
-TOKEN = 'directory-token.pickle'
+SERVICE_ACCOUNT_FILE = './credentials/service.json'
 
 class DirectoryManager:
 
@@ -18,21 +15,14 @@ class DirectoryManager:
 
     def get_service(self):
 
-        creds = None
-        if os.path.exists(TOKEN):
-            with open(TOKEN, 'rb') as token:
-                creds = pickle.load(token)
+        creds = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
-        if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
-                flow = InstalledAppFlow.from_client_secrets_file(CREDENTIAL, SCOPES)
-                creds = flow.run_local_server(port=PORT)
-            with open(TOKEN, 'wb') as token:
-                pickle.dump(creds, token)
+        with open('email-sender.json') as email_sender:
+            email = json.load(email_sender)
+        delegated_credentials = creds.with_subject(email['sender'])
 
-        service = build('admin', 'directory_v1', credentials=creds)
+        service = build('admin', 'directory_v1', credentials=delegated_credentials)
         return service
 
 

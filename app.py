@@ -26,7 +26,7 @@ else:
         #To add vars
         #email['content'] = email['content'].replace('##DATE##', current_date)
 
-    #users = ['hitalo.emanoel@gmail.com', 'wallacemedeiros@uern.br']
+    #users = ['@gmail.com', '@uern.br']
 
     gmail_manager = GmailManager()
     print('Users:')

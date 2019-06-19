@@ -3,6 +3,7 @@
 gmail/__pycache__/
 
 email-config.json
+email-sender.json
 
 // credentials
 token.pickle

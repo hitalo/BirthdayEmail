@@ -98,7 +98,7 @@ def main():
             print(label['name'])
 
     message = create_message(
-        'me', 'hitalo.emanoel@gmail.com', 'Test Gmail Api', 'This is just a test')
+        'me', '@gmail.com', 'Test Gmail Api', 'This is just a test')
     send_message(service, 'me', message)
 
 
