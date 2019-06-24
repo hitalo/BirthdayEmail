@@ -29,11 +29,10 @@ else:
     #users = ['@gmail.com', '@uern.br']
 
     gmail_manager = GmailManager()
-    print('Users:')
     for user in users:
         if("alu.uern.br" in user['primaryEmail']): #TODO check in query
             continue
 
-        print(u'{0} ({1}) {2}'.format(user['primaryEmail'], user['name']['fullName'], user['customSchemas']['Outros_dados_pessoais']['Data_de_Nascimento']))
+        #print(u'{0} ({1}) {2}'.format(user['primaryEmail'], user['name']['fullName'], user['customSchemas']['Outros_dados_pessoais']['Data_de_Nascimento']))
         message = gmail_manager.create_message('me', user['primaryEmail'], email['subject'], email['content'])
         gmail_manager.send_message('me', message)
