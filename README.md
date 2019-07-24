@@ -11,6 +11,8 @@ Add to root directory: <br>
 Add to credentials: <br>
 - service.json (service account key)
 
+Remove the "-sample" from json files and config
+
 Packages to install: <br>
 - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib<br>
 
