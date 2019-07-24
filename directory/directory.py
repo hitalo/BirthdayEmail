@@ -18,9 +18,9 @@ class DirectoryManager:
         creds = service_account.Credentials.from_service_account_file(
             SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
-        with open('email-sender.json') as email_sender:
-            email = json.load(email_sender)
-        delegated_credentials = creds.with_subject(email['sender'])
+        with open('directory-account.json') as account:
+            acc = json.load(account)
+        delegated_credentials = creds.with_subject(acc['account'])
 
         service = build('admin', 'directory_v1', credentials=delegated_credentials)
         return service
