@@ -6,6 +6,8 @@ from googleapiclient.discovery import build
 from google.oauth2 import service_account
 
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 import base64
 import json
 
@@ -56,6 +58,29 @@ class GmailManager:
         raw = base64.urlsafe_b64encode(message.as_bytes())
         raw = raw.decode()
         body = {'raw': raw}
+        return body
+
+
+
+    def create_message_with_img(self, sender, to, subject, message_text, image_file):
+        message = MIMEMultipart()
+        message['Subject'] = subject
+        message['From'] = sender
+        message['To'] = to
+
+        message.attach(MIMEText('<p><img src="cid:image1" /></p>' + message_text, 'html'))
+
+        with open(image_file, 'rb') as image:
+            image.seek(0)
+            img = MIMEImage(image.read(), 'png')
+
+        img.add_header('Content-Id', '<image1>')
+        img.add_header("Content-Disposition", "inline", filename="image1")
+        message.attach(img)
+
+        raw_message_no_attachment = base64.urlsafe_b64encode(message.as_bytes())
+        raw_message_no_attachment = raw_message_no_attachment.decode()
+        body = {'raw': raw_message_no_attachment}
         return body
 
 

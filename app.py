@@ -34,5 +34,5 @@ else:
             continue
 
         #print(u'{0} ({1}) {2}'.format(user['primaryEmail'], user['name']['fullName'], user['customSchemas']['Outros_dados_pessoais']['Data_de_Nascimento']))
-        message = gmail_manager.create_message('me', user['primaryEmail'], email['subject'], email['content'])
+        message = gmail_manager.create_message_with_img('me', user['primaryEmail'], email['subject'], email['content'], email['image'])
         gmail_manager.send_message('me', message)
